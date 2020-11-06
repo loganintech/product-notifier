@@ -1,0 +1,58 @@
+{
+  "should_open_browser": true,
+  "daemon_mode": true,
+  "daemon_timeout": 30,
+  "discord_url": "",
+  "ratelimit_keys": null,
+  "proxy_url": null,
+  "targets": [
+    {
+      "name": "Ryzen 5950x",
+      "url": "https://www.newegg.com/amd-ryzen-9-5950x/p/N82E16819113663",
+      "key": "newegg",
+      "active": true
+    },
+    {
+      "name": "Ryzen 5900x",
+      "url": "https://www.newegg.com/amd-ryzen-9-5900x/p/N82E16819113664",
+      "key": "newegg",
+      "active": true
+    },
+    {
+      "name": "Ryzen 5800x",
+      "url": "https://www.newegg.com/amd-ryzen-7-5800x/p/N82E16819113665",
+      "key": "newegg",
+      "active": true
+    },
+    {
+      "name": "Ryzen 5600x",
+      "url": "https://www.newegg.com/amd-ryzen-5-5600x/p/N82E16819113666",
+      "key": "newegg",
+      "active": true
+    },
+    {
+      "name": "Ryzen 5950x",
+      "url": "https://www.amazon.com/dp/B0815Y8J9N",
+      "key": "amazon",
+      "active": true
+    },
+    {
+      "name": "Ryzen 5900x",
+      "url": "https://www.amazon.com/dp/B08164VTWH",
+      "key": "amazon",
+      "active": true
+    },
+    {
+      "name": "Ryzen 5800x",
+      "url": "https://www.amazon.com/dp/B0815XFSGK",
+      "key": "amazon",
+      "active": true
+    },
+    {
+      "name": "Ryzen 5600x",
+      "url": "https://www.amazon.com/dp/B08166SLDF",
+      "key": "amazon",
+      "active": true
+    }
+  ]
+}
