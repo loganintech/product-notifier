@@ -20,7 +20,9 @@ impl Notifier {
                 Some(time) => time > &Local::now(),
                 _ => false,
             }
-        } else { false }
+        } else {
+            false
+        }
     }
 
     fn run_command(&self, command: &str, args: &[&str]) -> Result<(), NotifyError> {
