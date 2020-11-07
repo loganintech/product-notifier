@@ -71,7 +71,7 @@ pub async fn get_providers_from_scraping(
         .config
         .targets
         .iter()
-        .filter(|p| p.is_active())
+        .filter(|p| p.is_active() && !notifier.is_ratelimited(&p.key))
         .cloned()
         .collect::<Vec<ScrapingTarget>>();
 
