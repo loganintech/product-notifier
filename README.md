@@ -4,8 +4,12 @@ This program is a generic scraper for some stores to keep track of product avail
 
 ## Supported Stores
 
-* NewEgg
-* Amazon
+|Store|ConfigKey|
+|---|---|
+|Amazon|amazon|
+|NewEgg|newegg|
+|Best Buy|bestbuy|
+|B&HPhoto Video|bnh|
 
 ## Setup
 
