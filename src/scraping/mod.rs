@@ -153,8 +153,7 @@ fn modify_checked_map(product: &ScrapingTarget, map: &mut HashMap<String, (usize
 fn reload_tor() -> Result<(), NotifyError> {
     let mut child = std::process::Command::new("service")
         .args(&["tor", "reload"])
-        .spawn()
-        .map_err(NotifyError::CommandErr)?;
+        .spawn()?;
     let res = child.wait()?;
     if res.success() {
         Ok(())
