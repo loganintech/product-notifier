@@ -50,8 +50,8 @@ impl Notifier {
     }
 
     #[cfg(not(any(target_os = "macos", target_os = "windows")))]
-    pub fn open_in_browser(&self) -> Result<(), NotifyError> {
-        NotifyError::PlatformNotSupported
+    pub fn open_in_browser(&self, url: &str) -> Result<(), NotifyError> {
+        Err(NotifyError::PlatformNotSupported)
     }
 
     pub async fn handle_found_product(

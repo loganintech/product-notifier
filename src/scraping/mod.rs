@@ -155,7 +155,7 @@ fn reload_tor() -> Result<(), NotifyError> {
         .args(&["tor", "reload"])
         .spawn()
         .map_err(NotifyError::CommandErr)?;
-    let res = child.wait().map_err(NotifyError::CommandErr)?;
+    let res = child.wait()?;
     if res.success() {
         Ok(())
     } else {
