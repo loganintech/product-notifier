@@ -6,7 +6,7 @@ use regex::{Regex, RegexBuilder};
 
 use crate::{
     error::NotifyError,
-    scraping::{target::ScrapingTarget, ScrapingProvider},
+    scraping::{ScrapingProvider, target::ScrapingTarget},
 };
 
 lazy_static! {
@@ -15,6 +15,8 @@ lazy_static! {
         Regex::new(r#"<script type="text/javascript" src="(.+ItemInfo4.+)">"#).unwrap();
 
     static ref INSTOCK_REGEX: Regex = RegexBuilder::new(r#""instock":true"#)
+        .case_insensitive(true).ignore_whitespace(true).build().unwrap();
+    static ref SELLERNAME_REGEX: Regex = RegexBuilder::new(r#""sellername":null"#)
         .case_insensitive(true).ignore_whitespace(true).build().unwrap();
 }
 
@@ -34,7 +36,7 @@ impl<'a> ScrapingProvider<'a> for NeweggScraper {
         }
 
         // A new version doesn't call the script anymore, they just load the entire window property directly into the HTML
-        if INSTOCK_REGEX.is_match(&resp) {
+        if INSTOCK_REGEX.is_match(&resp) && SELLERNAME_REGEX.is_match(&resp) {
             return Ok(product.clone());
         }
 
@@ -48,7 +50,7 @@ impl<'a> ScrapingProvider<'a> for NeweggScraper {
             let product_resp = reqwest::get(product_url).await?.text().await?;
 
             // Then look for the JSON property that shows it's in stock. Yes, we could serialize this but why bother right now
-            if INSTOCK_REGEX.is_match(&product_resp) {
+            if INSTOCK_REGEX.is_match(&product_resp) && SELLERNAME_REGEX.is_match(&resp) {
                 return Ok(product.clone());
             }
         }

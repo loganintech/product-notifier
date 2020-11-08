@@ -8,27 +8,27 @@
   "targets": [
     {
       "name": "Ryzen 5950x",
-      "url": "https://www.newegg.com/amd-ryzen-9-5950x/p/N82E16819113663",
+      "url": "https://www.newegg.com/amd-ryzen-9-5950x/p/N82E16819113663?Item=N82E16819113663",
       "key": "newegg",
       "active": true
     },
     {
       "name": "Ryzen 5900x",
-      "url": "https://www.newegg.com/amd-ryzen-9-5900x/p/N82E16819113664",
+      "url": "https://www.newegg.com/amd-ryzen-9-5900x/p/N82E16819113664?Item=N82E16819113664",
       "key": "newegg",
       "active": true
     },
     {
       "name": "Ryzen 5800x",
-      "url": "https://www.newegg.com/amd-ryzen-7-5800x/p/N82E16819113665",
+      "url": "https://www.newegg.com/amd-ryzen-7-5800x/p/N82E16819113665?Item=N82E16819113665",
       "key": "newegg",
-      "active": true
+      "active": false
     },
     {
       "name": "Ryzen 5600x",
-      "url": "https://www.newegg.com/amd-ryzen-5-5600x/p/N82E16819113666",
+      "url": "https://www.newegg.com/amd-ryzen-5-5600x/p/N82E16819113666?Item=N82E16819113666",
       "key": "newegg",
-      "active": true
+      "active": false
     },
     {
       "name": "Ryzen 5950x",
