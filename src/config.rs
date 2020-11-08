@@ -34,7 +34,7 @@ impl Notifier {
             Err(_) => {
                 return Ok(Notifier {
                     config: Config::default(),
-                })
+                });
             }
             Ok(file) => file,
         };

@@ -1,13 +1,14 @@
+use std::collections::{HashMap, HashSet};
+
+use async_trait::async_trait;
+
+use target::ScrapingTarget;
+
+use crate::{error::NotifyError, notifier::Notifier};
+
 pub mod amazon;
 pub mod newegg;
 pub mod target;
-
-use std::collections::{HashMap, HashSet};
-
-use crate::{error::NotifyError, notifier::Notifier};
-use target::ScrapingTarget;
-
-use async_trait::async_trait;
 
 #[async_trait]
 pub trait ScrapingProvider<'a> {
@@ -146,6 +147,20 @@ fn modify_checked_map(product: &ScrapingTarget, map: &mut HashMap<String, (usize
             products.push(name.clone())
         })
         .or_insert((1, vec![name]));
+}
+
+#[cfg(target_os = "linux")]
+fn reload_tor() -> Result<(), NotifyError> {
+    let mut child = std::process::Command::new("service")
+        .args(&["tor", "reload"])
+        .spawn()
+        .map_err(NotifyError::CommandErr)?;
+    let res = child.wait().map_err(NotifyError::CommandErr)?;
+    if res.success() {
+        Ok(())
+    } else {
+        Err(NotifyError::CommandResult(res.code().unwrap_or(0)))
+    }
 }
 
 fn print_err(product: &ScrapingTarget, e: impl std::error::Error) {
