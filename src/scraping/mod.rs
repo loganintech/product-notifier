@@ -9,6 +9,8 @@ use crate::{error::NotifyError, notifier::Notifier};
 pub mod amazon;
 pub mod newegg;
 pub mod target;
+pub mod bestbuy;
+pub mod bnh;
 
 #[async_trait]
 pub trait ScrapingProvider<'a> {
@@ -125,7 +127,7 @@ fn get_client(notifier: &Notifier) -> Result<reqwest::Client, NotifyError> {
     let proxy_url = &notifier.config.proxy_url;
     let mut client_builder = reqwest::ClientBuilder::new()
         .user_agent(
-            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:80.0) Gecko/20100101 Firefox/80.0",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101 Firefox/82.0",
         )
         .gzip(true);
     if let Some(proxy_url) = proxy_url {

@@ -14,9 +14,9 @@ lazy_static! {
     static ref DETAIL_REGEX: Regex =
         Regex::new(r#"<script type="text/javascript" src="(.+ItemInfo4.+)">"#).unwrap();
 
-    static ref INSTOCK_REGEX: Regex = RegexBuilder::new(r#""instock":true"#)
+    static ref INSTOCK_REGEX: Regex = RegexBuilder::new(r#""instock":([a-zA-Z]+)"#)
         .case_insensitive(true).ignore_whitespace(true).build().unwrap();
-    static ref SELLERNAME_REGEX: Regex = RegexBuilder::new(r#""sellername":null"#)
+    static ref SELLERNAME_REGEX: Regex = RegexBuilder::new(r#""sellername":"?([a-zA-Z0-9]+)"?"#)
         .case_insensitive(true).ignore_whitespace(true).build().unwrap();
 }
 
@@ -36,7 +36,7 @@ impl<'a> ScrapingProvider<'a> for NeweggScraper {
         }
 
         // A new version doesn't call the script anymore, they just load the entire window property directly into the HTML
-        if INSTOCK_REGEX.is_match(&resp) && SELLERNAME_REGEX.is_match(&resp) {
+        if has_stock(&resp) {
             return Ok(product.clone());
         }
 
@@ -50,13 +50,39 @@ impl<'a> ScrapingProvider<'a> for NeweggScraper {
             let product_resp = reqwest::get(product_url).await?.text().await?;
 
             // Then look for the JSON property that shows it's in stock. Yes, we could serialize this but why bother right now
-            if INSTOCK_REGEX.is_match(&product_resp) && SELLERNAME_REGEX.is_match(&resp) {
+            if has_stock(&product_resp) {
                 return Ok(product.clone());
             }
         }
 
         Err(NotifyError::NoScrapingTargetFound)
     }
+}
+
+fn has_stock(page_data: &str) -> bool {
+    let seller_list = SELLERNAME_REGEX
+        // Get the list of captures
+        .captures_iter(&page_data)
+        .filter_map(|a| {
+            // Get the name group directly
+            a.get(1).map(|cap| cap.as_str())
+        })
+        .collect::<Vec<&str>>();
+
+    let in_stock_list = INSTOCK_REGEX
+        // Get the list of captures
+        .captures_iter(&page_data)
+        .filter_map(|a| {
+            // Get the name group directly
+            a.get(1).map(|cap| cap.as_str())
+        })
+        .skip(1)
+        .collect::<Vec<&str>>();
+
+    seller_list
+        .iter()
+        .zip(in_stock_list.iter())
+        .any(|(seller, has_stock)| seller == &"null" && has_stock == &"true")
 }
 
 #[allow(dead_code)]
