@@ -7,11 +7,10 @@ use crate::{error::NotifyError, scraping::ScrapingProvider, scraping::target::Sc
 
 // Look for the div that says it's Sold Out, case insensitive. Give it a bit of before and after HTML so that it doesn't false match on other elements
 lazy_static! {
-    static ref BUTTON_REGEX: Regex =
-        RegexBuilder::new(r#"Sold Out</button>"#)
-            .case_insensitive(true)
-            .build()
-            .expect("Invalid regex");
+    static ref BUTTON_REGEX: Regex = RegexBuilder::new(r#"Sold Out</button>"#)
+        .case_insensitive(true)
+        .build()
+        .expect("Invalid regex");
 }
 
 pub struct BestBuyScraper;
@@ -42,9 +41,7 @@ impl<'a> ScrapingProvider<'a> for BestBuyScraper {
         resp: reqwest::Response,
         product: &'a ScrapingTarget,
     ) -> Result<ScrapingTarget, NotifyError> {
-        let resp = resp
-            .text()
-            .await?;
+        let resp = resp.text().await?;
 
         // If we can't find the sold out button, we're back in stock
         if !BUTTON_REGEX.is_match(&resp) {

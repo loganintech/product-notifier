@@ -3,7 +3,10 @@ use serde::{Deserialize, Serialize};
 use crate::error::NotifyError;
 use crate::scraping::ScrapingProvider;
 
-use super::{amazon::AmazonScraper, bestbuy::BestBuyScraper, bnh::BnHScraper, newegg::NeweggScraper};
+use super::{
+    amazon::AmazonScraper, amd::AmdScraper, antonline::AntScraper, bestbuy::BestBuyScraper,
+    bnh::BnHScraper, newegg::NeweggScraper,
+};
 
 #[derive(Serialize, Deserialize, Clone, Debug, Hash, Eq, PartialEq)]
 pub struct ScrapingTarget {
@@ -35,6 +38,8 @@ impl ScrapingTarget {
             "amazon" => AmazonScraper.is_available(self, client).await,
             "bestbuy" => BestBuyScraper.is_available(self, client).await,
             "bnh" => BnHScraper.is_available(self, client).await,
+            "antonline" => AntScraper.is_available(self, client).await,
+            "amd" => AmdScraper.is_available(self, client).await,
             _ => Err(NotifyError::NoScrapingTargetFound),
         }
     }

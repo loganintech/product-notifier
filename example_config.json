@@ -22,13 +22,13 @@
       "name": "Ryzen 5800x",
       "url": "https://www.newegg.com/amd-ryzen-7-5800x/p/N82E16819113665?Item=N82E16819113665",
       "key": "newegg",
-      "active": true
+      "active": false
     },
     {
       "name": "Ryzen 5600x",
       "url": "https://www.newegg.com/amd-ryzen-5-5600x/p/N82E16819113666?Item=N82E16819113666",
       "key": "newegg",
-      "active": true
+      "active": false
     },
     {
       "name": "Ryzen 5950x",
@@ -61,7 +61,7 @@
       "active": true
     },
     {
-      "name": "Ryzen 5950x",
+      "name": "Ryzen 5900x",
       "url": "https://www.bestbuy.com/site/amd-ryzen-9-5900x-4th-gen-12-core-24-threads-unlocked-desktop-processor-without-cooler/6438942.p?skuId=6438942",
       "key": "bestbuy",
       "active": true
@@ -70,13 +70,13 @@
       "name": "Ryzen 5800x",
       "url": "https://www.bestbuy.com/site/amd-ryzen-7-5800x-4th-gen-8-core-16-threads-unlocked-desktop-processor-without-cooler/6439000.p?skuId=6439000",
       "key": "bestbuy",
-      "active": true
+      "active": false
     },
     {
       "name": "Ryzen 5600x",
       "url": "https://www.bestbuy.com/site/amd-ryzen-5-5600x-4th-gen-6-core-12-threads-unlocked-desktop-processor-with-wraith-stealth-cooler/6438943.p?skuId=6438943",
       "key": "bestbuy",
-      "active": true
+      "active": false
     },
     {
       "name": "Ryzen 5950x",
@@ -101,6 +101,18 @@
       "url": "https://www.bhphotovideo.com/c/product/1598377-REG/amd_100_100000065box_ryzen_5_5600x_3_7.html",
       "key": "bnh",
       "active": true
+    },
+    {
+      "name": "Ryzen 5950x",
+      "url": "https://www.antonline.com/AMD/Computers/Electronic_Components/Microprocessors/1411788",
+      "key": "antonline",
+      "active": true
+    },
+    {
+      "name": "Ryzen 3950x",
+      "url": "https://www.antonline.com/AMD/Computers/Electronic_Components/Microprocessors/1386988",
+      "key": "antonline",
+      "active": false
     }
   ]
 }

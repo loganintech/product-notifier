@@ -1,12 +1,17 @@
+use std::io::Write;
+
 use async_trait::async_trait;
+use regex::{Regex, RegexBuilder};
 
-use crate::{error::NotifyError, scraping::ScrapingProvider};
-use crate::scraping::target::ScrapingTarget;
+use crate::{
+    error::NotifyError,
+    scraping::{ScrapingProvider, target::ScrapingTarget},
+};
 
-pub struct BnHScraper;
+pub struct AmdScraper;
 
 #[async_trait]
-impl<'a> ScrapingProvider<'a> for BnHScraper {
+impl<'a> ScrapingProvider<'a> for AmdScraper {
     async fn handle_response(
         &'a self,
         resp: reqwest::Response,
@@ -14,9 +19,7 @@ impl<'a> ScrapingProvider<'a> for BnHScraper {
     ) -> Result<ScrapingTarget, NotifyError> {
         let resp = resp.text().await?;
 
-        if resp.contains(r#"showNotifyWhenAvailable": false"#)
-            && resp.contains(r#"showNotifyWhenInStock": false"#)
-        {
+        if !resp.contains(r#"<p class="product-out-of-stock">Out of stock</p>"#) {
             return Ok(product.clone());
         }
 

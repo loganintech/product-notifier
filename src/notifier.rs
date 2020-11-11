@@ -1,4 +1,4 @@
-use std::{collections::HashMap, process::Command};
+use std::process::Command;
 
 use chrono::{Duration, Local};
 
@@ -16,13 +16,12 @@ pub struct Notifier {
 impl Notifier {
     pub fn is_ratelimited(&self, key: &str) -> bool {
         if let Some(map) = &self.config.ratelimit_keys {
-            match map.get(key) {
-                Some(time) => time > &Local::now(),
-                _ => false,
+            if let Some(time) = map.get(key) {
+                return time > &Local::now();
             }
-        } else {
-            false
         }
+
+        false
     }
 
     fn run_command(&self, command: &str, args: &[&str]) -> Result<(), NotifyError> {

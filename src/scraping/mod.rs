@@ -1,16 +1,20 @@
 use std::collections::{HashMap, HashSet};
+use std::time::Duration;
 
 use async_trait::async_trait;
+use reqwest::header::{HeaderMap, HeaderValue};
 
 use target::ScrapingTarget;
 
 use crate::{error::NotifyError, notifier::Notifier};
 
 pub mod amazon;
-pub mod newegg;
-pub mod target;
+pub mod amd;
+pub mod antonline;
 pub mod bestbuy;
 pub mod bnh;
+pub mod newegg;
+pub mod target;
 
 #[async_trait]
 pub trait ScrapingProvider<'a> {
@@ -108,8 +112,8 @@ pub async fn get_providers_from_scraping(
         }
     }
 
-    #[cfg(target_os = "linux")]
     if should_reload_tor {
+        #[cfg(target_os = "linux")]
         if let Err(e) = reload_tor() {
             eprintln!("Error reloading TOR: {}", e);
         }
@@ -125,7 +129,21 @@ pub async fn get_providers_from_scraping(
 
 fn get_client(notifier: &Notifier) -> Result<reqwest::Client, NotifyError> {
     let proxy_url = &notifier.config.proxy_url;
+    let mut headers = HeaderMap::new();
+    headers.insert(
+        reqwest::header::ACCEPT,
+        "text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,*/*;q=0.8"
+            .parse()
+            .unwrap(),
+    );
+    headers.insert(
+        reqwest::header::ACCEPT_LANGUAGE,
+        "en-US,en;q=0.5".parse().unwrap(),
+    );
     let mut client_builder = reqwest::ClientBuilder::new()
+        .connect_timeout(Duration::from_secs(
+            notifier.config.daemon_timeout.unwrap_or_else(|| 30),
+        ))
         .user_agent(
             "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:82.0) Gecko/20100101 Firefox/82.0",
         )
