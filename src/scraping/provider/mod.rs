@@ -4,3 +4,4 @@ pub mod antonline;
 pub mod bestbuy;
 pub mod bnh;
 pub mod newegg;
+mod utilities;

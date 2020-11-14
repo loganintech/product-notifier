@@ -41,34 +41,3 @@ impl<'a> ScrapingProvider<'a> for AmazonScraper {
         Err(NotifyError::NoScrapingTargetFound)
     }
 }
-
-#[allow(dead_code)]
-async fn write_amazon_response<'a, T: Into<&'a [u8]>>(
-    resp: T,
-    headers: HeaderMap,
-) -> Result<(), NotifyError> {
-    let mut file = tokio::fs::File::create(format!(
-        "./amazon_log/amazon-log-{}.txt",
-        chrono::Local::now().to_rfc3339().replace(":", "-"),
-    ))
-    .await?;
-
-    for header in headers {
-        let header = match header {
-            (Some(name), val) => {
-                let mut bytes = Vec::new();
-                name.as_str()
-                    .as_bytes()
-                    .chain(val.as_bytes())
-                    .read_to_end(&mut bytes)?;
-                bytes
-            }
-            _ => continue,
-        };
-        file.write_all(header.as_slice()).await?;
-    }
-
-    file.write_all(resp.into()).await?;
-
-    Ok(())
-}

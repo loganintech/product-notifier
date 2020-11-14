@@ -98,10 +98,10 @@ pub async fn get_providers_from_scraping(
         match res {
             Ok(res) => {
                 // If it's a test product, don't make a notification for it
+                modify_checked_map(product, &mut checked);
                 if matches!(res.is_test, Some(true)) {
                     continue;
                 }
-                modify_checked_map(product, &mut checked);
                 if !providers.insert(res) {
                     eprintln!("Duplicate provider found.");
                 }

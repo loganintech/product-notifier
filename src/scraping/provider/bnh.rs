@@ -3,6 +3,8 @@ use async_trait::async_trait;
 use crate::{error::NotifyError, scraping::ScrapingProvider};
 use crate::scraping::target::ScrapingTarget;
 
+use super::utilities;
+
 pub struct BnHScraper;
 
 #[async_trait]
@@ -14,8 +16,8 @@ impl<'a> ScrapingProvider<'a> for BnHScraper {
     ) -> Result<ScrapingTarget, NotifyError> {
         let resp = resp.text().await?;
 
-        if resp.contains(r#"showNotifyWhenAvailable": false"#)
-            && resp.contains(r#"showNotifyWhenInStock": false"#)
+        if resp.contains(r#"showNotifyWhenAvailable":false"#)
+            && resp.contains(r#"showNotifyWhenInStock":false"#)
         {
             return Ok(product.clone());
         }

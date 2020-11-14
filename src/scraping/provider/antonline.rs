@@ -34,13 +34,3 @@ impl<'a> ScrapingProvider<'a> for AntScraper {
         Err(NotifyError::NoScrapingTargetFound)
     }
 }
-
-#[allow(dead_code)]
-fn write_newegg_log<'a, T: Into<&'a [u8]>>(resp: T) -> Result<(), NotifyError> {
-    let mut file = std::fs::File::create(format!(
-        "./newegg_log/newegg-log-{}.txt",
-        chrono::Local::now().to_rfc3339().replace(":", "-"),
-    ))?;
-
-    Ok(file.write_all(resp.into())?)
-}

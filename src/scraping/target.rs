@@ -32,8 +32,8 @@ impl ScrapingTarget {
         match (self.active, self.is_test) {
             // If it's active and a test, check our time
             (Some(true), Some(true)) => {
-                // If the time is divisible by 10, AKA, every 10 minutes, check a test product
-                Local::now().minute() % 10 == 0
+                // If we're in debug mode OR If the time is divisible by 10, AKA, every 10 minutes, check a test product
+                cfg!(debug_assertions) || Local::now().minute() % 10 == 0
             }
             // If it's active and not our test, just go for it
             (Some(true), _) => true,
