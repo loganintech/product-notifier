@@ -31,6 +31,13 @@
       "active": false
     },
     {
+      "name": "Ryzen 3950x",
+      "url": "https://www.newegg.com/amd-ryzen-9-3950x/p/N82E16819113616",
+      "key": "newegg",
+      "active": true,
+      "is_test": true
+    },
+    {
       "name": "Ryzen 5950x",
       "url": "https://www.amazon.com/dp/B0815Y8J9N",
       "key": "amazon",
@@ -79,6 +86,13 @@
       "active": false
     },
     {
+      "name": "Ryzen 3950x",
+      "url": "https://www.bestbuy.com/site/amd-ryzen-9-3950x-3rd-generation-16-core-32-thread-3-5-ghz-4-7-ghz-max-boost-socket-am4-unlocked-desktop-processor/6391901.p",
+      "key": "bestbuy",
+      "active": true,
+      "is_test": true
+    },
+    {
       "name": "Ryzen 5950x",
       "url": "https://www.bhphotovideo.com/c/product/1598372-REG/amd_100_100000059wof_ryzen_9_5950x_3_4.html",
       "key": "bnh",
@@ -103,6 +117,13 @@
       "active": true
     },
     {
+      "name": "Ryzen 3950x",
+      "url": "https://www.bhphotovideo.com/c/product/1507038-REG/amd_ryzen_9_3950x_3_8.html",
+      "key": "bnh",
+      "active": true,
+      "is_test": true
+    },
+    {
       "name": "Ryzen 5950x",
       "url": "https://www.antonline.com/AMD/Computers/Electronic_Components/Microprocessors/1411788",
       "key": "antonline",
@@ -112,7 +133,8 @@
       "name": "Ryzen 3950x",
       "url": "https://www.antonline.com/AMD/Computers/Electronic_Components/Microprocessors/1386988",
       "key": "antonline",
-      "active": false
+      "active": true,
+      "is_test": true
     }
   ]
 }

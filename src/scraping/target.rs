@@ -1,3 +1,4 @@
+use chrono::{Local, Timelike};
 use serde::{Deserialize, Serialize};
 
 use crate::error::NotifyError;
@@ -14,6 +15,8 @@ pub struct ScrapingTarget {
     pub url: String,
     pub key: String,
     active: Option<bool>,
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub is_test: Option<bool>,
 }
 
 impl ScrapingTarget {
@@ -26,7 +29,17 @@ impl ScrapingTarget {
     }
 
     pub fn is_active(&self) -> bool {
-        self.active.unwrap_or_else(|| true)
+        match (self.active, self.is_test) {
+            // If it's active and a test, check our time
+            (Some(true), Some(true)) => {
+                // If the time is divisible by 10, AKA, every 10 minutes, check a test product
+                Local::now().minute() % 10 == 0
+            }
+            // If it's active and not our test, just go for it
+            (Some(true), _) => true,
+            // If it's not active, ignore it
+            _ => false,
+        }
     }
 
     pub async fn is_available(

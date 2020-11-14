@@ -6,7 +6,7 @@ use regex::{Regex, RegexBuilder};
 use reqwest::header::HeaderMap;
 use tokio::io::AsyncWriteExt;
 
-use crate::{error::NotifyError, scraping::target::ScrapingTarget, scraping::ScrapingProvider};
+use crate::{error::NotifyError, scraping::ScrapingProvider, scraping::target::ScrapingTarget};
 
 lazy_static! {
     // See if it's offering us a sale on another seller

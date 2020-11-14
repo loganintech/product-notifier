@@ -10,6 +10,7 @@ This program is a generic scraper for some stores to keep track of product avail
 |NewEgg|newegg|
 |Best Buy|bestbuy|
 |B&HPhoto Video|bnh|
+|AntOnline|antonline|
 
 ## Setup
 
@@ -44,7 +45,11 @@ The snippet below will help you configure the script.
       // The URL of the product to scrape
       "page": "https://www.newegg.com/amd-ryzen-9-5950x/p/N82E16819113663",
       // Whether or not this product scrapes
-      "active": true
+      "active": true,
+      // If this is set to true, the bot will check this page every 10 minutes. This is assumed to be in stock
+      // If this test stock is not found, it's either really out of stock, or it's a bug with the bot
+      // Can be left out of the JSON with no effect
+      "is_test": false
     }
   ]
 }
