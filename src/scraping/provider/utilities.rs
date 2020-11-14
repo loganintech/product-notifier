@@ -11,7 +11,10 @@ pub async fn write_response_to_file<'a, T: Into<&'a [u8]>>(
     headers: Option<HeaderMap>,
 ) -> Result<(), NotifyError> {
     // Ignore the error here, since it'll error if the folder already exists
-    let _ = tokio::fs::DirBuilder::new().recursive(true).create(format!("./logs/{}", folder)).await;
+    let _ = tokio::fs::DirBuilder::new()
+        .recursive(true)
+        .create(format!("./logs/{}", folder))
+        .await;
     let mut file = tokio::fs::File::create(format!(
         "./logs/{}/{}-log-{}.txt",
         folder,
@@ -28,7 +31,8 @@ pub async fn write_response_to_file<'a, T: Into<&'a [u8]>>(
                     name.as_str()
                         .as_bytes()
                         .chain(val.as_bytes())
-                        .read_to_end(&mut bytes).await?;
+                        .read_to_end(&mut bytes)
+                        .await?;
                     bytes
                 }
                 _ => continue,
