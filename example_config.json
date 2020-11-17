@@ -38,6 +38,25 @@
       "is_test": true
     },
     {
+      "name": "Ryzen 5950x DiskDrive Bundle",
+      "url": "https://www.newegg.com/Product/ComboDealDetails?ItemList=Combo.4199825",
+      "key": "newegg",
+      "active": true
+    },
+    {
+      "name": "Ryzen 5950x M.2 Bundle",
+      "url": "https://www.newegg.com/Product/ComboDealDetails?ItemList=Combo.4199061",
+      "key": "newegg",
+      "active": true
+    },
+    {
+      "name": "Ryzen 3950x MOBO Bundle",
+      "url": "https://www.newegg.com/Product/ComboDealDetails?ItemList=Combo.4199075",
+      "key": "newegg",
+      "active": true,
+      "is_test": true
+    },
+    {
       "name": "Ryzen 5950x",
       "url": "https://www.amazon.com/dp/B0815Y8J9N",
       "key": "amazon",
@@ -60,6 +79,13 @@
       "url": "https://www.amazon.com/dp/B08166SLDF",
       "key": "amazon",
       "active": false
+    },
+    {
+      "name": "Ryzen 3950x",
+      "url": "https://www.amazon.com/gp/product/B07ZTYKLZW",
+      "key": "amazon",
+      "active": true,
+      "is_test": true
     },
     {
       "name": "Ryzen 5950x",
@@ -135,6 +161,31 @@
       "key": "antonline",
       "active": true,
       "is_test": true
+    },
+    {
+      "name": "Ryzen 5950x",
+      "url": "https://www.amd.com/en/direct-buy/5450881400/us",
+      "key": "amd",
+      "active": false
+    },
+    {
+      "name": "Ryzen 3950x",
+      "url": "https://www.amd.com/en/direct-buy/5358857400/us",
+      "key": "amd",
+      "active": false,
+      "is_test": true
+    },
+    {
+      "name": "Ryzen 5950x",
+      "url": "https://www.tigerdirect.com/applications/SearchTools/item-details.asp?EdpNo=6945711",
+      "key": "tigerdirect",
+      "active": true
+    },
+    {
+      "name": "Ryzen 5900x",
+      "url": "https://www.tigerdirect.com/applications/SearchTools/item-details.asp?EdpNo=6945712",
+      "key": "tigerdirect",
+      "active": false
     }
   ]
 }
