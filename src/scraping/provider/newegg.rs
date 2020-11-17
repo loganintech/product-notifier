@@ -35,6 +35,10 @@ impl<'a> ScrapingProvider<'a> for NeweggScraper {
             return Err(NotifyError::RateLimit);
         }
 
+        if product.url.contains("ComboDealDetails") {
+            return has_combo_stock(&resp, product);
+        }
+
         // A new version doesn't call the script anymore, they just load the entire window property directly into the HTML
         if has_stock(&resp) {
             return Ok(product.clone());
@@ -83,4 +87,12 @@ fn has_stock(page_data: &str) -> bool {
         .iter()
         .zip(in_stock_list.iter())
         .any(|(seller, has_stock)| seller == &"null" && has_stock == &"true")
+}
+
+fn has_combo_stock(page_data: &str, product: &ScrapingTarget) -> Result<ScrapingTarget, NotifyError> {
+    if page_data.contains("Add to Cart") {
+        return Ok(product.clone());
+    }
+
+    Err(NotifyError::NoScrapingTargetFound)
 }

@@ -4,12 +4,15 @@ use std::time::Duration;
 use async_trait::async_trait;
 use reqwest::header::{HeaderMap, HeaderValue};
 
-pub use provider::amazon;
-pub use provider::amd;
-pub use provider::antonline;
-pub use provider::bestbuy;
-pub use provider::bnh;
-pub use provider::newegg;
+pub use provider::{
+    amazon,
+    amd,
+    antonline,
+    bestbuy,
+    bnh,
+    newegg,
+    tigerdirect,
+};
 use target::ScrapingTarget;
 
 use crate::{error::NotifyError, notifier::Notifier};
