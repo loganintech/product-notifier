@@ -2,6 +2,8 @@ use std::collections::{HashMap, HashSet};
 use std::time::Duration;
 
 use async_trait::async_trait;
+use futures::{StreamExt, TryFutureExt, TryStreamExt};
+use regex::Regex;
 use reqwest::header::{HeaderMap, HeaderValue};
 
 pub use provider::{
@@ -22,6 +24,8 @@ pub mod target;
 
 #[async_trait]
 pub trait ScrapingProvider<'a> {
+    fn absent_regex(&self) -> Option<&Regex> { None }
+
     async fn get_request(
         &'a self,
         product: &'a ScrapingTarget,
@@ -38,8 +42,18 @@ pub trait ScrapingProvider<'a> {
     async fn handle_response(
         &'a self,
         resp: reqwest::Response,
-        details: &'a ScrapingTarget,
-    ) -> Result<ScrapingTarget, NotifyError>;
+        product: &'a ScrapingTarget,
+    ) -> Result<ScrapingTarget, NotifyError> {
+        let resp = resp.text().await?;
+
+        self.absent_regex().map(|reg| {
+            if !reg.is_match(&resp) {
+                return Ok(product.clone());
+            } else {
+                Err(NotifyError::NoScrapingTargetFound)
+            }
+        }).unwrap_or_else(|| Err(NotifyError::DefaultResponseHandlerMissingRegex))
+    }
 
     async fn is_available(
         &'a self,

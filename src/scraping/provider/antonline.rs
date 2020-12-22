@@ -20,17 +20,5 @@ pub struct AntScraper;
 
 #[async_trait]
 impl<'a> ScrapingProvider<'a> for AntScraper {
-    async fn handle_response(
-        &'a self,
-        resp: reqwest::Response,
-        product: &'a ScrapingTarget,
-    ) -> Result<ScrapingTarget, NotifyError> {
-        let resp = resp.text().await?;
-
-        if !SOLD_OUT_BUTTON.is_match(&resp) {
-            return Ok(product.clone());
-        }
-
-        Err(NotifyError::NoScrapingTargetFound)
-    }
+    fn absent_regex(&self) -> Option<&Regex> { Some(&SOLD_OUT_BUTTON) }
 }

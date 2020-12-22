@@ -17,6 +17,8 @@ pub struct BestBuyScraper;
 
 #[async_trait]
 impl<'a> ScrapingProvider<'a> for BestBuyScraper {
+    fn absent_regex(&self) -> Option<&Regex> { Some(&BUTTON_REGEX) }
+
     async fn get_request(
         &'a self,
         product: &'a ScrapingTarget,
@@ -34,20 +36,5 @@ impl<'a> ScrapingProvider<'a> for BestBuyScraper {
             .send()
             .await
             .map_err(|e| NotifyError::ClientBuild(e))
-    }
-
-    async fn handle_response(
-        &'a self,
-        resp: reqwest::Response,
-        product: &'a ScrapingTarget,
-    ) -> Result<ScrapingTarget, NotifyError> {
-        let resp = resp.text().await?;
-
-        // If we can't find the sold out button, we're back in stock
-        if !BUTTON_REGEX.is_match(&resp) {
-            return Ok(product.clone());
-        }
-
-        Err(NotifyError::NoScrapingTargetFound)
     }
 }
