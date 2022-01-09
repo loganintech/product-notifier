@@ -8,7 +8,7 @@ pub async fn send_webhook(url: &str, webhook_body: DiscordWebhook) -> Result<(),
     let client = reqwest::Client::new();
     let res = client
         .post(url)
-        .body(payload.clone())
+        .body(payload)
         .header("Content-Type", "application/json")
         .send()
         .await
@@ -18,8 +18,6 @@ pub async fn send_webhook(url: &str, webhook_body: DiscordWebhook) -> Result<(),
     if !status.is_success() || status.is_server_error() || status.is_client_error() {
         return Err(NotifyError::WebClient(status));
     }
-
-    println!("Sent discord webhook - Payload: {}", payload);
 
     Ok(())
 }

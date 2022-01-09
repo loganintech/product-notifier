@@ -45,7 +45,7 @@ impl ScrapingTarget {
     pub async fn is_available(
         &self,
         client: &reqwest::Client,
-    ) -> Result<ScrapingTarget, NotifyError> {
+    ) -> Result<&ScrapingTarget, NotifyError> {
         match self.key.as_str() {
             "newegg" => NeweggScraper.is_available(self, client).await,
             "amazon" => AmazonScraper.is_available(self, client).await,

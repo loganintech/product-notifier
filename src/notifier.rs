@@ -81,10 +81,7 @@ impl Notifier {
         Ok(())
     }
 
-    pub async fn handle_found_product(
-        &mut self,
-        product: &ScrapingTarget,
-    ) -> Result<(), NotifyError> {
+    pub async fn handle_found_product(&self, product: &ScrapingTarget) -> Result<(), NotifyError> {
         // If the notifier is configured to open this in a browser
         if self.config.should_open_browser() {
             // Open the page in a browser

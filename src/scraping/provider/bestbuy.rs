@@ -3,7 +3,7 @@ use lazy_static::lazy_static;
 use regex::{Regex, RegexBuilder};
 use reqwest::header::HeaderMap;
 
-use crate::{error::NotifyError, scraping::ScrapingProvider, scraping::target::ScrapingTarget};
+use crate::{error::NotifyError, scraping::target::ScrapingTarget, scraping::ScrapingProvider};
 
 // Look for the div that says it's Sold Out, case insensitive. Give it a bit of before and after HTML so that it doesn't false match on other elements
 lazy_static! {
@@ -17,7 +17,9 @@ pub struct BestBuyScraper;
 
 #[async_trait]
 impl<'a> ScrapingProvider<'a> for BestBuyScraper {
-    fn absent_regex(&self) -> Option<&Regex> { Some(&BUTTON_REGEX) }
+    fn absent_regex(&self) -> Option<&Regex> {
+        Some(&BUTTON_REGEX)
+    }
 
     async fn get_request(
         &'a self,

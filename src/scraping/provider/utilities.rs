@@ -21,7 +21,7 @@ pub async fn write_response_to_file<'a, T: Into<&'a [u8]>>(
         product_name,
         chrono::Local::now().to_rfc3339().replace(":", "-"),
     ))
-        .await?;
+    .await?;
 
     if let Some(map) = headers {
         for header in map {

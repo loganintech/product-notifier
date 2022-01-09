@@ -1,12 +1,11 @@
-
-
 use async_trait::async_trait;
 use lazy_static::lazy_static;
 use regex::{Regex, RegexBuilder};
 
-
-
-use crate::{error::NotifyError, scraping::provider::utilities, scraping::ScrapingProvider, scraping::target::ScrapingTarget};
+use crate::{
+    error::NotifyError, scraping::provider::utilities, scraping::target::ScrapingTarget,
+    scraping::ScrapingProvider,
+};
 
 lazy_static! {
     // See if it's offering us a sale on another seller
@@ -27,22 +26,25 @@ impl<'a> ScrapingProvider<'a> for AmazonScraper {
         &'a self,
         resp: reqwest::Response,
         product: &'a ScrapingTarget,
-    ) -> Result<ScrapingTarget, NotifyError> {
-        let _headers = resp.headers().clone();
+    ) -> Result<&'a ScrapingTarget, NotifyError> {
         let resp_text = resp.text().await?;
 
         if resp_text.contains(CAPTCHA_TEXT) {
             return Err(NotifyError::RateLimit);
         }
 
-        if !UNAVAILABLE_REGEX.is_match(&resp_text)
-            && !OTHER_SELLER_REGEX.is_match(&resp_text)
-        {
-            return Ok(product.clone());
+        if !UNAVAILABLE_REGEX.is_match(&resp_text) && !OTHER_SELLER_REGEX.is_match(&resp_text) {
+            return Ok(product);
         }
 
         if matches!(product.is_test, Some(true)) {
-            utilities::write_response_to_file(resp_text.as_ref(), &product.key, &product.name, None).await?;
+            utilities::write_response_to_file(
+                resp_text.as_ref(),
+                &product.key,
+                &product.name,
+                None,
+            )
+            .await?;
         }
 
         Err(NotifyError::NoScrapingTargetFound)

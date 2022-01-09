@@ -1,11 +1,8 @@
-
-
 use async_trait::async_trait;
-
 
 use crate::{
     error::NotifyError,
-    scraping::{ScrapingProvider, target::ScrapingTarget},
+    scraping::{target::ScrapingTarget, ScrapingProvider},
 };
 
 pub struct AmdScraper;
@@ -16,11 +13,11 @@ impl<'a> ScrapingProvider<'a> for AmdScraper {
         &'a self,
         resp: reqwest::Response,
         product: &'a ScrapingTarget,
-    ) -> Result<ScrapingTarget, NotifyError> {
+    ) -> Result<&'a ScrapingTarget, NotifyError> {
         let resp = resp.text().await?;
 
         if !resp.contains(r#"<p class="product-out-of-stock">Out of stock</p>"#) {
-            return Ok(product.clone());
+            return Ok(product);
         }
 
         Err(NotifyError::NoScrapingTargetFound)

@@ -1,12 +1,10 @@
-
-
 use async_trait::async_trait;
 use lazy_static::lazy_static;
 use regex::{Regex, RegexBuilder};
 
 use crate::{
     error::NotifyError,
-    scraping::{ScrapingProvider, target::ScrapingTarget},
+    scraping::{target::ScrapingTarget, ScrapingProvider},
 };
 
 lazy_static! {
@@ -28,7 +26,7 @@ impl<'a> ScrapingProvider<'a> for NeweggScraper {
         &'a self,
         resp: reqwest::Response,
         product: &'a ScrapingTarget,
-    ) -> Result<ScrapingTarget, NotifyError> {
+    ) -> Result<&'a ScrapingTarget, NotifyError> {
         let resp = resp.text().await?;
 
         if resp.contains("We apologize for the confusion, but we can't quite tell if you're a person or a script.") {
@@ -41,7 +39,7 @@ impl<'a> ScrapingProvider<'a> for NeweggScraper {
 
         // A new version doesn't call the script anymore, they just load the entire window property directly into the HTML
         if has_stock(&resp) {
-            return Ok(product.clone());
+            return Ok(product);
         }
 
         let capture = DETAIL_REGEX.captures_iter(&resp).next();
@@ -55,7 +53,7 @@ impl<'a> ScrapingProvider<'a> for NeweggScraper {
 
             // Then look for the JSON property that shows it's in stock. Yes, we could serialize this but why bother right now
             if has_stock(&product_resp) {
-                return Ok(product.clone());
+                return Ok(product);
             }
         }
 
@@ -89,9 +87,12 @@ fn has_stock(page_data: &str) -> bool {
         .any(|(seller, has_stock)| seller == &"null" && has_stock == &"true")
 }
 
-fn has_combo_stock(page_data: &str, product: &ScrapingTarget) -> Result<ScrapingTarget, NotifyError> {
+fn has_combo_stock<'a>(
+    page_data: &str,
+    product: &'a ScrapingTarget,
+) -> Result<&'a ScrapingTarget, NotifyError> {
     if page_data.contains("Add to Cart") {
-        return Ok(product.clone());
+        return Ok(product);
     }
 
     Err(NotifyError::NoScrapingTargetFound)

@@ -23,7 +23,10 @@ async fn main() -> Result<(), NotifyError> {
             }
         };
 
-        let wait_time = notifier.config.daemon_timeout.get_or_insert(DEFAULT_DAEMON_TIMEOUT);
+        let wait_time = notifier
+            .config
+            .daemon_timeout
+            .get_or_insert(DEFAULT_DAEMON_TIMEOUT);
         let wait_time = wait_time.saturating_sub(runtime as u64);
         println!("Took {} seconds, waiting {}s.", runtime, wait_time);
 
@@ -45,10 +48,10 @@ async fn run_bot(notifier: &mut Notifier) -> Result<i64, NotifyError> {
     let scraped_set = scraping::get_providers_from_scraping(notifier).await?;
 
     // Only send a message if we haven't sent one in the last 5 minutes
-    for product in scraped_set.iter() {
+    for product in scraped_set {
         // If we found any providers, send the messages
         // If it results in an error print the error
-        if let Err(e) = notifier.handle_found_product(product).await {
+        if let Err(e) = notifier.handle_found_product(&product).await {
             eprintln!("Provider {:?} had issue: {:?}", product, e);
         }
     }

@@ -28,6 +28,8 @@ pub enum NotifyError {
     ProxyNotRunning,
     #[error("Building the Web Client Failed: {0}")]
     ClientBuild(reqwest::Error),
-    #[error("The Default Response handler requires a Regex to check for. For example: `.+Sold Out!.+`")]
+    #[error(
+        "The Default Response handler requires a Regex to check for. For example: `.+Sold Out!.+`"
+    )]
     DefaultResponseHandlerMissingRegex,
 }

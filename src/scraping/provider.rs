@@ -4,5 +4,5 @@ pub mod antonline;
 pub mod bestbuy;
 pub mod bnh;
 pub mod newegg;
-pub mod utilities;
 pub mod tigerdirect;
+pub mod utilities;
