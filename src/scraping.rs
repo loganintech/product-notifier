@@ -2,9 +2,8 @@ use std::collections::{HashMap, HashSet};
 use std::time::Duration;
 
 use async_trait::async_trait;
-use futures::{StreamExt, TryFutureExt, TryStreamExt};
 use regex::Regex;
-use reqwest::header::{HeaderMap, HeaderValue};
+use reqwest::header::{HeaderMap};
 
 pub use provider::{
     amazon,

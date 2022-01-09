@@ -3,7 +3,7 @@ use async_trait::async_trait;
 use crate::{error::NotifyError, scraping::ScrapingProvider};
 use crate::scraping::target::ScrapingTarget;
 
-use super::utilities;
+
 
 pub struct BnHScraper;
 

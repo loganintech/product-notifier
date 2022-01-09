@@ -1,10 +1,10 @@
-use std::io::prelude::*;
+
 
 use async_trait::async_trait;
 use lazy_static::lazy_static;
 use regex::{Regex, RegexBuilder};
-use reqwest::header::HeaderMap;
-use tokio::io::AsyncWriteExt;
+
+
 
 use crate::{error::NotifyError, scraping::provider::utilities, scraping::ScrapingProvider, scraping::target::ScrapingTarget};
 
