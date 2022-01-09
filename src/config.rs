@@ -32,9 +32,7 @@ impl Notifier {
         // Open our config
         let mut file = match File::open(CONFIG_FILE_PATH).await {
             Err(_) => {
-                return Ok(Notifier {
-                    config: Config::default(),
-                });
+                return Ok(Notifier::default());
             }
             Ok(file) => file,
         };

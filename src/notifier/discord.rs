@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-use crate::{NotifyError, scraping::target::ScrapingTarget};
+use crate::NotifyError;
 
 pub async fn send_webhook(url: &str, webhook_body: DiscordWebhook) -> Result<(), NotifyError> {
     let payload = serde_json::to_string(&webhook_body).unwrap();

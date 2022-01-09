@@ -11,6 +11,7 @@ use crate::{
 
 mod discord;
 
+#[derive(Default)]
 pub struct Notifier {
     pub config: Config,
 }
@@ -45,8 +46,7 @@ impl Notifier {
 
     // If we're on a mac
     #[cfg(target_os = "macos")]
-    pub fn open_in_browser(&self) -> Result<(), NotifyError> {
-        let url = self.get_url()?;
+    pub fn open_in_browser(&self, url: &str) -> Result<(), NotifyError> {
         self.run_command("open", &[url])
     }
 

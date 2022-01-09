@@ -9,6 +9,8 @@ use config::write_config;
 use error::NotifyError;
 use notifier::Notifier;
 
+const DEFAULT_DAEMON_TIMEOUT: u64 = 60;
+
 #[tokio::main]
 async fn main() -> Result<(), NotifyError> {
     let mut notifier = Notifier::new().await?;
@@ -21,12 +23,7 @@ async fn main() -> Result<(), NotifyError> {
             }
         };
 
-        let wait_time = if let Some(timeout) = notifier.config.daemon_timeout {
-            timeout
-        } else {
-            notifier.config.daemon_timeout = Some(30);
-            30
-        };
+        let wait_time = notifier.config.daemon_timeout.get_or_insert(DEFAULT_DAEMON_TIMEOUT);
         let wait_time = wait_time.saturating_sub(runtime as u64);
         println!("Took {} seconds, waiting {}s.", runtime, wait_time);
 
