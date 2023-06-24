@@ -36,7 +36,7 @@ async fn main() -> Result<(), NotifyError> {
         }
 
         // Otherwise, delay for the rest of the 30 second cycle
-        tokio::time::delay_for(std::time::Duration::from_secs(wait_time)).await;
+        tokio::time::sleep(std::time::Duration::from_secs(wait_time)).await;
     }
 
     Ok(())
